@@ -7,7 +7,7 @@
 #include "nvs_flash.h"
 #include "pb.h"
 #include "pb_common.h"
-
+#include <stdint.h>
 
 void app_main() 
 {
