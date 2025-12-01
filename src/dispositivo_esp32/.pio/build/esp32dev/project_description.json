@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "dispositivo_esp32",
-    "project_version":    "d2926a1-dirty",
+    "project_version":    "7b6ec56-dirty",
     "project_path":       "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32",
     "idf_path":           "/home/eduardo/.platformio/packages/framework-espidf",
     "build_dir":          "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/.pio/build/esp32dev",
@@ -1480,7 +1480,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/.pio/build/esp32dev/esp-idf/src/libsrc.a",
-            "sources": [ "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/src/CMakeLists.txt", "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/src/main.c" ],
+            "sources": [ "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/src/CMakeLists.txt", "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/src/conexao.c", "/home/eduardo/Documents/Code/Trabalho2-Distribuidos-UFC/src/dispositivo_esp32/src/main.c" ],
             "include_dirs": []
         },
         "tcp_transport": {
