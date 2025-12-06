@@ -38,8 +38,9 @@ client.on('listening', function () {
 });
 
 client.on('message', function (message, remote) {
-    // console.log('A: Epic Command Received. Preparing Relay.');
-    // console.log('B: From: -> ' + remote.address + ':' + remote.port + ' - ' + message);
+    console.log('Dados recevidos de um servidor: ' + message + '\n');
+    console.log('Messagem: ', message); 
+    console.log('Vinda de ' +remote.address + ':' + remote.port + ' - ' + message);
     IP_Gateway = remote.address
     PORT_Gateway = Number(message)
     console.log('C: Gateway set to -> ' + IP_Gateway + ':' + PORT_Gateway);
@@ -49,29 +50,3 @@ client.on('message', function (message, remote) {
 });
 
 client.bind(PORT);
-
-
-const Net = require('net');
-var readline = require('readline');
-const port = 7895;
-const host = 'localhost';
-
-const client_ = new Net.Socket();
-
-client_.connect({ port: PORT_Gateway, host: IP_Gateway }, function() {
-    var input = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    input.question("O que você quer escrever?\n", function(resp){
-        
-      console.info(`Msg enviada: ${resp}`);
-      client_.write(resp);
-      client_.on('data', function(message) {
-        console.info(`Msg recebida: ${message}`);    
-        client_.end();
-      });
-      input.close();
-    });  
-});
