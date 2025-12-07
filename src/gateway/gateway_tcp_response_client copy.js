@@ -10,10 +10,8 @@ server_tcp.listen(port, () => console.log(`Servidor na porta ${port}`));
 server_tcp.on('connection', (socket) => {
     console.log("Cliente conectado");
 
-    // ler dado do arquivo JSON dados.json
     let arquivo = fs.readFileSync("dados.json", "utf8");
-    
-    // Convertendo para objeto JSON
+    // 2. Converte de texto → JSON
     let json_arq = JSON.parse(arquivo);
     console.log("Conteúdo do arquivo:", json_arq);
     

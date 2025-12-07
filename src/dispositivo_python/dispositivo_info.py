@@ -1,6 +1,31 @@
 import socket
 import json
 
+"""
+    Esse módulo é responsável por enviar as informações do dispositivo para o gateway.
+    Após receber dados de Multcast UDP
+"""
+
+def carregar_json(caminho_arquivo):
+    """
+    Lê um arquivo JSON e retorna os dados carregados como dicionário ou lista.
+
+    :param caminho_arquivo: Caminho do arquivo JSON.
+    :return: Dados do JSON (dict ou list).
+    """
+    import os
+    
+    try:
+        with open(caminho_arquivo, "r", encoding="utf-8") as f:
+            dados = json.load(f)
+        return dados
+    except FileNotFoundError:
+        print(f"Arquivo não encontrado: {caminho_arquivo}")
+    except json.JSONDecodeError:
+        print("Erro ao decodificar o JSON. Verifique se o arquivo está válido.")
+    except Exception as e:
+        print(f"Ocorreu um erro: {str(e)}")
+
 def enviar_mensagem(sock, mensagem: str):
     """Envia mensagem JSON codificada em UTF-8."""
     try:
@@ -22,16 +47,9 @@ def receber_resposta(sock):
 
 def enviar_info(port: int, ip: str):
     servico_device = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    servico_device.connect((ip, port))
-    data = {
-        "ip_device": "localhost",
-        "port_device": 5001,
-        "action": "save_device",
-        "name_device": "Sensor de Temperatura",
-        "status_device": "ativo",
-        "type_device": "sensor",
+    servico_device.connect(("localhost", 7895))
 
-    }
+    data = carregar_json("Trabalho_2/Trabalho2-Distribuidos-UFC/src/dispositivo_python/dados.json")
 
     data = json.dumps(data)
     enviar_mensagem(servico_device, data)
