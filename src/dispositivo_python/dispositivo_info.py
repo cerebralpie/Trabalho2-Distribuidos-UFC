@@ -45,7 +45,7 @@ def receber_resposta(sock):
         print("Erro ao receber resposta:", e)
         raise
 
-def enviar_info(port: int, ip: str):
+def enviar_info( ip: str, port: int,):
     servico_device = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     servico_device.connect(("localhost", 7895))
 

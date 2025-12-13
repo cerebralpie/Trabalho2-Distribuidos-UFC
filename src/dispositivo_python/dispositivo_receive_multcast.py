@@ -3,13 +3,15 @@ import struct
 
 from dispositivo_info import enviar_info
 
-PORT = 5007
-MCAST_GRP = "224.1.1.1"
+
 
 IP_Gateway = ""
 PORT_Gateway = 7895
 
 def start_udp_client():
+    PORT = 5007
+    MCAST_GRP = "224.1.1.1"
+    
     global IP_Gateway, PORT_Gateway
 
     # Cria socket UDP
@@ -37,10 +39,10 @@ def start_udp_client():
         IP_Gateway = addr[0]
         PORT_Gateway = int(message)
 
-
-        # Envia informações do dispositivo para o gateway via TCP
-        enviar_info(PORT_Gateway, IP_Gateway)
+        enviar_info( IP_Gateway, PORT_Gateway)  # no caso isso iria enviar assim que 
+                                               # recebesse o ip e porta do gateway via multcast
         
-        print(f"C: Gateway set to -> {IP_Gateway}:{PORT_Gateway}")
+#         #print(f"C: Gateway set to -> {IP_Gateway}:{PORT_Gateway}")
 
-start_udp_client()
+# if __name__ == "__main__":
+#     start_udp_client()

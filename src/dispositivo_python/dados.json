@@ -5,5 +5,7 @@
     "name_device": "Sensor de InfraVermelho",
     "status_device": "ativo",
     "type_device": "sensor",
-    "value_device": 123
+    "value_device": 432,
+    "parametros": "X, Y ou Z"
+
 }

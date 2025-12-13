@@ -24,7 +24,6 @@ def carregar_json(caminho_arquivo):
     except Exception as e:
         print(f"Ocorreu um erro: {str(e)}")
 
-
 def salvar_json(caminho_arquivo, dados):
     """
     Salva um dicionário Python em um arquivo JSON.
@@ -46,6 +45,39 @@ def enviar_mensagem(sock, mensagem: str):
     except Exception as e:
         print("Erro ao enviar mensagem:", e)
         raise
+
+def identificar_acao(data):
+    # data = json.loads(data.decode("utf-8"))
+    print("Dados recebidos do gateway:", data)
+ 
+    action = data["action"]
+
+    data_current = carregar_json("Trabalho_2/Trabalho2-Distribuidos-UFC/src/dispositivo_python/dados.json")
+    
+    if data["name_device"] == data_current["name_device"]:
+
+        if action == "turn_on":
+            status = "ativo"
+            data_current["status_device"] = status
+            return data_current
+        
+        elif action == "turn_off":
+            status = "inativo"
+            data_current["status_device"] = status
+
+            return data_current
+        
+        elif action == "set_value":
+            value = data["value"]
+            data_current["value_device"] = value
+
+            return data_current
+        
+        elif action == "read_value":
+            value = data_current["value"]
+            return data_current
+        
+    return None
 
 def receber_resposta(sock):
     """Recebe JSON do servidor."""
@@ -95,38 +127,5 @@ def receber_acao():
         conn.close()
 
 
-
-def identificar_acao(data):
-    # data = json.loads(data.decode("utf-8"))
-    print("Dados recebidos do gateway:", data)
- 
-    action = data["action"]
-
-    data_current = carregar_json("Trabalho_2/Trabalho2-Distribuidos-UFC/src/dispositivo_python/dados.json")
-    
-    if data["name_device"] == data_current["name_device"]:
-
-        if action == "turn_on":
-            status = "ativo"
-            data_current["status_device"] = status
-            return data_current
-        
-        elif action == "turn_off":
-            status = "inativo"
-            data_current["status_device"] = status
-
-            return data_current
-        
-        elif action == "set_value":
-            value = data["value"]
-            data_current["value_device"] = value
-
-            return data_current
-        
-        elif action == "read_value":
-            value = data_current["value"]
-            return data_current
-        
-    return None
-
 receber_acao()
+

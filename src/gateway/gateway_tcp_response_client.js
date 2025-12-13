@@ -40,7 +40,7 @@ function lerDados(data_json){
 
             case "ler":
                 console.log("Função Ler sensor ou status atuador")
-                return buscarDispositivoPorNome(data_json.name_device)
+                return lerDispositivo(data_json.name_device)
                 // chamar função de leitura
                 // retorno de função
 
@@ -48,11 +48,9 @@ function lerDados(data_json){
             case "escrever":
                 console.log("Função Escrever em atuador")
 
-                return executarAcaoDispositivo(deviceName, actionData)
+                return escreverDispositivo(deviceName, actionData)
                 // chamar função de escrita
                 // retorno de função
-
-
         }
 
     }else{
@@ -96,7 +94,7 @@ function listarDispositivos() {
     }
 }
 
-function executarAcaoDispositivo(deviceName, actionData) {
+function escreverDispositivo(deviceName, actionData) {
     try {
         // Lê JSON
         const conteudo = fs.readFileSync("dados.json", "utf8");
@@ -120,20 +118,14 @@ function executarAcaoDispositivo(deviceName, actionData) {
 
         console.log("\nDispositivo encontrado:", dispositivo);
 
-        // -----------------------------------------------------------
-        // CASO SEJA SENSOR
-        // -----------------------------------------------------------
         if (dispositivo.type_device === "sensor") {
-            console.log("\n🔵 Tipo: Sensor");
+            console.log("\n Tipo: Sensor");
 
             // Aqui você coloca a lógica do sensor (ex: leitura)
             console.log(`→ Sensor '${deviceName}' está realizando leitura...`);
             return { status: "ok", message: "Leitura realizada no sensor." };
         }
 
-        // -----------------------------------------------------------
-        // CASO SEJA ATUADOR
-        // -----------------------------------------------------------
         if (dispositivo.type_device === "atuador") {
             console.log("\nTipo: Atuador");
 
@@ -170,9 +162,8 @@ function executarAcaoDispositivo(deviceName, actionData) {
             return { status: "ok", message: `Ação '${action}' executada com sucesso.` };
         }
 
-        // -----------------------------------------------------------
-        // SE O TYPE NÃO FOR RECONHECIDO
-        // -----------------------------------------------------------
+        
+        // Se o type não for reconhecido
         console.log(`Tipo de dispositivo '${dispositivo.type_device}' não é reconhecido.`);
         return { status: "error", message: "Tipo inválido." };
 
@@ -182,8 +173,7 @@ function executarAcaoDispositivo(deviceName, actionData) {
     }
 }
 
-
-function buscarDispositivoPorNome(nome) {
+function lerDispositivo(nome) {
     try {
         // Lê o arquivo dados.json
         const conteudo = fs.readFileSync("dados.json", "utf8");
@@ -242,15 +232,15 @@ server_tcp.on('connection', (socket) => {
     // function enviarOrdemDevice(port, host, name_device, action, value=null)
     
 
-    
-
-
     // salvar informações do dispositivo  
     socket.on('data', (data) => {
         try {
             const json = JSON.parse(data.toString());
+
+            lerDados(data_json)
             console.log("JSON recebido:", json);
             console.log("Ação recebida:", json.action);
+            socket.write()
 
             
             
