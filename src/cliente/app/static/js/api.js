@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000"; // IP fixo ou domínio
+const BASE_URL = ""; // IP fixo ou domínio
 
 export async function getSensorData() {
   const response = await fetch(`${BASE_URL}/devices`);
