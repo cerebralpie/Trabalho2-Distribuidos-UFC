@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package gateway;
+
+message Empty {}
+
+message Device {
+  string name = 1;
+  string type = 2;
+  string value = 3;
+  string status = 4;
+}
+
+message DeviceList {
+  repeated Device devices = 1;
+}
+
+message Command {
+  string actuator_id = 1;
+  string command = 2;
+}
+
+message CommandResponse {
+  string status = 1;
+}
+
+service GatewayService {
+  rpc GetDevices(Empty) returns (DeviceList);
+  rpc SendCommand(Command) returns (CommandResponse);
+}
