@@ -83,9 +83,9 @@ def receive_info_device():
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     
     try:
-        server_socket.bind(('0.0.0.0', PORTA))
+        server_socket.bind(('localhost', PORTA))
         server_socket.listen(5)
-        print(f"Gateway (Python) rodando na porta {PORTA} aguardando Protobuf...")
+        print(f"\nGateway escutando info de devices em \nlocalhos:{PORTA}")
 
         while True:
             conn, addr = server_socket.accept()

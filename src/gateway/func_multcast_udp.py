@@ -21,9 +21,9 @@ def multcast_broadcaster_udp(
         ttl.to_bytes(1, byteorder="big")
     )
 
-    print("Broadcaster UDP iniciado")
-    print(f"Multicast: {multicast_ip}:{multicast_port}")
-    print(f"Intervalo: {interval_sec}s | TTL: {ttl}")
+    # print("Broadcaster UDP iniciado")
+    # print(f"Multicast: {multicast_ip}:{multicast_port}")
+    # print(f"Intervalo: {interval_sec}s | TTL: {ttl}")
 
     try:
         while True:
@@ -36,9 +36,9 @@ def multcast_broadcaster_udp(
 
             sock.sendto(payload, (multicast_ip, multicast_port))
 
-            print(
-                f"Enviado → gateway={ip_gateway} porta={port_gateway}"
-            )
+            # print(
+            #     f"Enviado → gateway={ip_gateway} porta={port_gateway}"
+            # )
 
             time.sleep(interval_sec)
 

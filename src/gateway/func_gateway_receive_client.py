@@ -16,7 +16,7 @@ from func_gateway_request_device import enviar_requisicao_tcp as enviar_req_devi
 
 
 IP_DEVICE = "localhost"
-PORT_DEVICE = 5001
+PORT_DEVICE = 50120
 
 
 def carregar_json():
@@ -104,6 +104,7 @@ def tratar_leitura(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
     ip_d, port_d = buscar_ip_porta_dispositivo(dados, nome_dispositivo)
 
     if ip_d and port_d:
+        print(f"leu leu o {req.name_device}" )
         resposta = enviar_req_device(
             ip_d,
             port_d,
@@ -114,7 +115,9 @@ def tratar_leitura(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
         )
     else:
         resposta = None
+
         raise ValueError("IP ou porta do dispositivo não informados")
+    return resposta
         
 
 def tratar_listagem(req: proto_gateway_pb2.Requisicao) -> proto_gateway_pb2.Resposta:
@@ -147,6 +150,7 @@ def tratar_requisicao(req: proto_gateway_pb2.Requisicao) -> proto_gateway_pb2.Re
     elif tipo == "escrever":
         return tratar_escrita(req)
     elif tipo == "listar":
+        print("LISTAAAAAA")
         return tratar_listagem(req)
 
     else:
@@ -164,10 +168,10 @@ def erro(comando, mensagem):
 
 def socket_receiv_client_request_device():
     socket_device = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket_device.bind((IP_DEVICE, 5012))
+    socket_device.bind((IP_DEVICE, PORT_DEVICE))
     socket_device.listen(1)
 
-    print(f"Dispositivo escutando em {IP_DEVICE}:{PORT_DEVICE}")
+    print(f"\nDispositivo escutando em Cliente em:\n{IP_DEVICE}:{PORT_DEVICE}")
 
     while True:
         conn, addr = socket_device.accept()

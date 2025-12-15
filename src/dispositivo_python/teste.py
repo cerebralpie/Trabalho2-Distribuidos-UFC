@@ -15,7 +15,7 @@ def receber(sock, classe):
     return msg
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(("localhost", 5001))
+sock.connect(("localhost", 50120))
 
 req = pb.Requisicao()
 req.name_client = "cliente_teste"
