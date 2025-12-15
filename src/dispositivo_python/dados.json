@@ -1,13 +1,13 @@
 {
-    "name_device": "Sensor de Fumaca",
+    "name_device": "Sensor de Presenca",
     "ip_device": "localhost",
     "port_device": 5001,
     "status": "ativo",
-    "type_device": "sensor",
+    "type_device": "atuador",
     "parametros": [
         {
-            "temperatura": "12",
-            "movimentacao": "sim"
+            "movimentacao": "Sim",
+            "fumaca": "Nao"
         }
     ]
 }

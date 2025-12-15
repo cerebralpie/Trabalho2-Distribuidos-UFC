@@ -27,9 +27,9 @@ def buscar_ip_porta_dispositivo(dados, nome_disopsitivo):
     
     for d in dados.get("dispositivos", []):
         if d.get("name_device") == nome_disopsitivo:
-            return d["ip_device"], d["port_device"]
+            return d["ip_device"], d["port_device"], d["type_device"], d["status"], d["parametros"]
 
-    return None, None
+    return None, None, None
 
 
 def recv_all(sock, n):
@@ -78,18 +78,21 @@ def tratar_escrita(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
     dados = carregar_json()
     nome_dispositivo = req.name_device
 
-    ip_d, port_d = buscar_ip_porta_dispositivo(dados, nome_dispositivo)
+    ip_d, port_d, type_device_d, status_d, param_d  = buscar_ip_porta_dispositivo(dados, nome_dispositivo)
+
 
     if ip_d and port_d:
+        print("escreve-escreve")
         resposta = enviar_req_device(
             ip_d,
             port_d,
             req.name_client,
             req.name_device,
-            req.operacao,
-            req.status,
-            req.type_device,
-            req.parametros)
+            "escrever",
+            req.escrever.info_device.status,
+            type_device_d,
+            req.escrever.info_device.parametros,
+            5)
     else:
         resposta = None
         raise ValueError("IP ou porta do dispositivo não informados")
@@ -101,7 +104,7 @@ def tratar_leitura(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
     dados = carregar_json()
     nome_dispositivo = req.name_device
 
-    ip_d, port_d = buscar_ip_porta_dispositivo(dados, nome_dispositivo)
+    ip_d, port_d, type_device_d, status_d, param_d  = buscar_ip_porta_dispositivo(dados, nome_dispositivo)
 
     if ip_d and port_d:
         print(f"leu leu o {req.name_device}" )
@@ -110,8 +113,13 @@ def tratar_leitura(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
             port_d,
             req.name_client,
             req.name_device,
-            req.operacao,
-            req.type_device,
+            "ler",
+             status_d,
+            type_device_d,
+            param_d,
+            5
+
+
         )
     else:
         resposta = None
@@ -150,7 +158,6 @@ def tratar_requisicao(req: proto_gateway_pb2.Requisicao) -> proto_gateway_pb2.Re
     elif tipo == "escrever":
         return tratar_escrita(req)
     elif tipo == "listar":
-        print("LISTAAAAAA")
         return tratar_listagem(req)
 
     else:

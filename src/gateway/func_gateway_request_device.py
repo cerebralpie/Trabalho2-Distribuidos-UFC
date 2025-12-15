@@ -53,6 +53,7 @@ def enviar_requisicao_tcp(
         req.ler.operacao.operacao = pb.ComandoOperacao.LER
 
     elif operacao.upper() == "ESCREVER":
+        print("===> escreve")
         req.escrever.operacao.operacao = pb.ComandoOperacao.ESCREVER
 
         if status is not None:

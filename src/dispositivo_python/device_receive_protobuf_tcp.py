@@ -67,6 +67,7 @@ def tratar_escrita(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
     dados = carregar_json()
     info = req.escrever.info_device
 
+    print("trantando escrita")
     # valida tipo do dispositivo
     if not(dados["type_device"] == "sensor"):
         # atualiza parâmetros
@@ -91,6 +92,7 @@ def tratar_escrita(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositivo_p
     ok.comando = "ESCREVER"
     ok.dados["resultado"] = "Dispositivo atualizado com sucesso"
     ok.dados["timestamp"] = datetime.now().isoformat()
+    
 
     return resposta
 
@@ -103,6 +105,13 @@ def tratar_requisicao(req: proto_dispositivo_pb2.Requisicao) -> proto_dispositiv
         return tratar_leitura(req)
 
     elif tipo == "escrever":
+        print("escreve")
+        print("escreve")
+        print("escreve")
+        print("escreve")
+        print("escreve")
+        print("escreve")
+        print("escreve")
         return tratar_escrita(req)
 
     else:

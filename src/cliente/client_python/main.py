@@ -34,14 +34,19 @@ def listar_dispositivos():
         print("Lista de dispositivos:")
         print(MessageToJson(resp, preserving_proto_field_name=True))
 
-def ler_dispositivo():
-    nome = input("Digite o nome do dispositivo para ler: ")
+def ler_dispositivo(nome = None):
     req = pb.Requisicao()
-    req.name_device = nome
-    # req.type_device = "sensor"  # ou perguntar ao usuário
-    req.name_client = "ClienteTeste"
-    # req.escrever.info_device.type_device = "sensor"
-    # req.ler.SetInParent()
+
+    if nome == None:
+        nome = input("Digite o nome do dispositivo para ler: ")
+        req.name_client = input("Digite o nome de usuario: ")
+    else: 
+        req.name_client = "default"
+
+
+    req.name_device = "Sensor de Fumaca"
+
+
     req.ler.operacao.operacao = pb.ComandoOperacao.LER
 
 
@@ -49,22 +54,36 @@ def ler_dispositivo():
         sock.connect((IP_SERVER, PORT_SERVER))
         enviar_protobuf(sock, req)
         # from proto_dispositivo_pb2 import Resposta
-        resp = receber_protobuf(sock, pb.RespostaOk)
+        resp = receber_protobuf(sock, pb.Resposta)
         print("Resposta da leitura:")
         print(MessageToJson(resp, preserving_proto_field_name=True))
 
-def escrever_dispositivo():
-    nome = input("Digite o nome do dispositivo para escrever: ")
-    req = pb.Requisicao()
-    req.name_device = nome
-    req.operacao = "escrever"
-    req.type_device = "atuador"  # ou perguntar ao usuário
-    req.name_client = "ClienteTeste"
+        return resp
 
-    # Exemplo de parâmetro
-    key = input("Digite o parâmetro a alterar: ")
-    value = input("Digite o valor do parâmetro: ")
-    req.parametros[key] = value
+def escrever_dispositivo():
+    # nome = input("Digite o nome do dispositivo para escrever: ")
+    resp = ler_dispositivo("Sensor de Presenca")
+    # resp = MessageToJson(resp, preserving_proto_field_name=True)
+
+    req = pb.Requisicao()
+    req.escrever.operacao.operacao = pb.ComandoOperacao.ESCREVER
+
+    req.name_device = "Sensor de Presenca"
+    # req.operacao = "escrever"
+
+    req.name_client = "cliente" #input("Digite o seu nome: ")
+    # req.WhichOneof("tipo") = "escrever"
+
+    parametros = resp.ok.device_info.parametros
+    for chave in parametros:
+        novo_valor = str(input(f"Digite o valor para '{chave}' (atual: {parametros[chave]}): "))
+        req.escrever.info_device.parametros[chave] = novo_valor
+
+    for chave in parametros:
+     
+        print(f"--> {req.escrever.info_device.parametros[chave]} ")
+    req.escrever.info_device.status = resp.ok.device_info.status
+    req.escrever.info_device.type_device = resp.ok.device_info.type_device
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.connect((IP_SERVER, PORT_SERVER))

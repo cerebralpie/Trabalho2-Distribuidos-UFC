@@ -37,7 +37,9 @@
             "status": "ativo",
             "type_device": "atuador",
             "parametros": [
-                {}
+                {
+                    "aberto": "nao"
+                }
             ]
         },
         {
@@ -47,19 +49,8 @@
             "status": "ativo",
             "type_device": "atuador",
             "parametros": [
-                {}
-            ]
-        },
-        {
-            "name_device": "Sensor de FumacINHA",
-            "ip_device": "localhost",
-            "port_device": 5001,
-            "status": "ativo",
-            "type_device": "sensor",
-            "parametros": [
                 {
-                    "temperatura": "12",
-                    "movimentacao": "sim"
+                    "ligado": "nao"
                 }
             ]
         },
@@ -71,8 +62,21 @@
             "type_device": "sensor",
             "parametros": [
                 {
-                    "movimentacao": "sim",
-                    "temperatura": "12"
+                    "fumaca": "nao",
+                    "movimentacao": "sim"
+                }
+            ]
+        },
+        {
+            "name_device": "Sensor de Presenca",
+            "ip_device": "localhost",
+            "port_device": 5001,
+            "status": "ativo",
+            "type_device": "atuador",
+            "parametros": [
+                {
+                    "movimentacao": "Sim",
+                    "fumaca": "Nao"
                 }
             ]
         }
